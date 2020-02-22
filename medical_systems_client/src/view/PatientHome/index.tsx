@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Menu, Avatar, BackTop, Dropdown, Icon, Carousel, Row, Col, Button } from 'antd';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
+import {CSSTransition} from 'react-transition-group';
 
 import 'antd/dist/antd.css'
 import './index.scss'
@@ -56,6 +57,14 @@ function Home (props: any) {
         }
       </Carousel>
       <div className="PatientHome-body">
+
+      <CSSTransition
+          in={true}
+          classNames="PatientHomeTransition"
+          unmountOnExit//是否占茅坑
+          timeout={5000}//消失延迟
+          appear = {true}
+      >
         <div className="PatientHome-body-gudie">
           {
             GudieList.map((item, index) => {
@@ -69,58 +78,59 @@ function Home (props: any) {
             })
           }
         </div>
+      </CSSTransition>
 
-        <div className="PatientHome-body-department">
-          <p className="PatientHome-body-department-gudie"  onClick={()=>{
-            props.history.push(`/Patient/Department`)}
-          }>
-            科室导航 
-            <Icon type="forward" theme="filled" />
-          </p>
-          <Row gutter={16}>
-            <Col span={8} className="PatientHome-body-department-img">
-              <img src="/img/department.jpeg"></img>
-            </Col>
-            <Col span={16} className="PatientHome-body-department-info">
-              {
-                departmentList.map((item,index) =>{
-                  return (
-                    <Button type="dashed" size="large" key={index} style={{width: '130px'}}>
-                      {item.name}
-                      <Icon type="right" />
-                    </Button>
-                    )
-                })
-              }
-            </Col>
-          </Row>
-        </div>
-
-        <div className="PatientHome-body-docter">
-          <p className="PatientHome-body-docter-gudie"  onClick={()=>{
-            props.history.push(`/Patient/Department`)}
-          }>
-            今日医师
-            <Icon type="forward" theme="filled" />
-          </p>
-          <Row gutter={16}>
+      <div className="PatientHome-body-department">
+        <p className="PatientHome-body-department-gudie"  onClick={()=>{
+          props.history.push(`/Patient/Department`)}
+        }>
+          科室导航 
+          <Icon type="forward" theme="filled" />
+        </p>
+        <Row gutter={16}>
+          <Col span={8} className="PatientHome-body-department-img">
+            <img src="/img/department.jpeg"></img>
+          </Col>
+          <Col span={16} className="PatientHome-body-department-info">
             {
-              docters.map(item => {
+              departmentList.map((item,index) =>{
                 return (
-                  <Col span={4} key={item.workerId}>
-                    <div className="PatientHome-body-docter-img">
-                      <img src="/img/docter1.jpeg"></img>
-                      <div>
-                        <p>{item.name}</p>
-                        <p>{item.departmentName}-{item.position}</p>
-                      </div>
-                    </div>
-                  </Col>
-                )
+                  <Button type="dashed" size="large" key={index} style={{width: '130px'}}>
+                    {item.name}
+                    <Icon type="right" />
+                  </Button>
+                  )
               })
             }
-          </Row>
-        </div>
+          </Col>
+        </Row>
+      </div>
+
+      <div className="PatientHome-body-docter">
+        <p className="PatientHome-body-docter-gudie"  onClick={()=>{
+          props.history.push(`/Patient/Department`)}
+        }>
+          今日医师
+          <Icon type="forward" theme="filled" />
+        </p>
+        <Row gutter={16}>
+          {
+            docters.map(item => {
+              return (
+                <Col span={4} key={item.workerId}>
+                  <div className="PatientHome-body-docter-img">
+                    <img src="/img/docter1.jpeg"></img>
+                    <div>
+                      <p>{item.name}</p>
+                      <p>{item.departmentName}-{item.position}</p>
+                    </div>
+                  </div>
+                </Col>
+              )
+            })
+          }
+        </Row>
+      </div>
       </div> 
     </div>
   );

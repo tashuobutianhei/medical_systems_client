@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Layout, Menu, Avatar, BackTop, Dropdown, Icon } from 'antd';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
 
@@ -10,11 +10,14 @@ import PatientHome from '../PatientHome';
 import Department from '../Department';
 import Order from '../Order';
 import Guide from '../Guide/';
+import {LoginRegModal as LogRegFormModal} from '../../component/loginAndReg'
 
 
 const { Header, Content, Footer } = Layout;
 
 function Patient (props: any) {
+
+  let [LoginRegModalVisable, changLoginRegModalVisable] = useState<boolean>(false);
 
   const menu = (
     <Menu>
@@ -23,8 +26,13 @@ function Patient (props: any) {
     </Menu>
   );
 
+  const toggleModalVisable = (visable: boolean) => {
+    changLoginRegModalVisable(visable);
+  }
 
   return (
+    <>
+    <LogRegFormModal visible={LoginRegModalVisable} toggleModalVisable={toggleModalVisable}></LogRegFormModal>
     <Layout className="layout">
       <Header className="header">
         <img src="/img/logo.png" ></img>
@@ -57,7 +65,11 @@ function Patient (props: any) {
                 :
                 <div>
                   <Avatar icon="user" />
-                  <span className="div" style={{ color: 'white', cursor: 'pointer' }}>登录</span>
+                  <span className="div" 
+                  onClick={()=>{
+                    changLoginRegModalVisable(!LoginRegModalVisable);
+                  }}
+                  style={{ color: 'white', cursor: 'pointer' }}>登录</span>
                 </div>
             }
             </div>
@@ -75,6 +87,7 @@ function Patient (props: any) {
       </Content>
       <Footer className="footer">The Docters medical systems ©2020 Created by lizilong @ 软件工程 2016 02</Footer>
     </Layout>
+    </>
   );
 }
 
