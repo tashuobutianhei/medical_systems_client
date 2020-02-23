@@ -11,10 +11,12 @@ import Tool from '../../common/util';
 
 import 'antd/dist/antd.css'
 import './index.scss'
+import { UserInfo } from 'os';
 
 type Props = {
   visible: boolean
   toggleModalVisable: (visable:boolean) => void;
+  loginSuccess: (UserInfo: any) => void
 }
 
 
@@ -37,7 +39,10 @@ export function LoginRegModal(props: Props) {
         userClient.login(values.username, values.password).then((res) => {
           const res2: any = res;
           if(res2.code === 0) {
-            Tool.setCookie('the_docters_token', res2.data);
+            Tool.setCookie('the_docters_token', res2.data.token);
+            props.loginSuccess(res2.data.user);
+            props.toggleModalVisable(false);
+            
             message.success({
               content: res2.message,
               duration: 2,

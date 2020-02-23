@@ -1,6 +1,6 @@
 import React from 'react'
-import { Layout, Menu, Avatar, BackTop, Dropdown, Icon, Carousel, Row, Col, Button } from 'antd';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom'
+import { Icon, Carousel, Row, Col, Button } from 'antd';
+import { withRouter } from 'react-router-dom'
 import {CSSTransition} from 'react-transition-group';
 
 import 'antd/dist/antd.css'
