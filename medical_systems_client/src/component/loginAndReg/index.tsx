@@ -7,9 +7,6 @@ import {WrappedRegForm} from '../registerForm'
 import userClient from '../../api/user';
 import jsCookie from 'js-cookie';
 
-
-
-
 import 'antd/dist/antd.css'
 import './index.scss'
 

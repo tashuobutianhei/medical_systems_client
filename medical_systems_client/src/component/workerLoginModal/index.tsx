@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Modal, message} from 'antd';
 
 import {WrappedLoginForm} from '../LoginForm/index';

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { Form, Icon, Input, Divider, Radio, InputNumber} from 'antd';
 
 

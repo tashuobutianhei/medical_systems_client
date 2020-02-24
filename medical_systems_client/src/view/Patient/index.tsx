@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Menu, Avatar, BackTop, Dropdown, Icon } from 'antd';
+import { Layout, Menu, Avatar, Dropdown, Icon } from 'antd';
 import { Route, Switch, withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 
