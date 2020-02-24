@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Layout, Menu, Avatar, BackTop, Dropdown, Icon } from 'antd';
 import HomeEnterCrad from '../../component/HomeEnterCrad'
 
 import 'antd/dist/antd.css'
@@ -10,31 +9,50 @@ type Props = {
   imgUrl: string
   enterText: string
   textColor: string
+  auth: boolean
+  type: number
+  path: string
+  toggleModalVisable?: (status: boolean) => void
+}
+
+
+type PatientType = {
+  user: any
+  onLogin(userInfo: any): void
 }
 
 const homeList: Props[] = [{
   color: '#62999d',
   imgUrl: 'patient',
   enterText: '患者端',
-  textColor: 'white'
+  textColor: 'white',
+  auth: false,
+  type: 1,
+  path: 'Patient',
 }, {
   color: '#dac594',
   imgUrl: 'docter',
   enterText: '医生端',
-  textColor: 'white'
+  textColor: 'white',
+  auth: true,
+  type: 2,
+  path: 'Docter',
 }, {
   color: '#fff',
   imgUrl: 'manager',
   enterText: '管理端',
-  textColor: 'black'
+  textColor: 'black',
+  auth: true,
+  type: 0,
+  path: 'Manager',
 }]
 
-function Home () {
+
+function Home (props: PatientType) {
   return (
     <>
-    <div className="modal">
 
-    </div>
+    <div className="modal"> </div>
     <div className="home">
       <div className="home-tilte">
         <img src='/img/logo.png'></img>
@@ -51,4 +69,4 @@ function Home () {
   )
 }
 
-export default Home
+export default Home;

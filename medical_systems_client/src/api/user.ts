@@ -4,10 +4,11 @@ import {get, post} from '../common/client';
 // type login = (username: string, password: string) => new Promise<T>()
 
 const userClient =  {
-  login(username: string, password: string) {
+  login(username: string, password: string, userType: number) {
     return post('/users/login', {
-        username: username,
-        password: password,
+        username,
+        password,
+        userType
     })
   },
 

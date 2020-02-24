@@ -13,7 +13,9 @@ import Order from '../Order';
 import Guide from '../Guide/';
 import {LoginRegModal as LogRegFormModal} from '../../component/loginAndReg'
 import { userLogin, userLogout } from '../../actiosn/user';
-import tool from '../../common/util'
+import tool from '../../common/util';
+import jsCookie from 'js-cookie';
+
 
 
 const { Header, Content, Footer } = Layout;
@@ -48,7 +50,7 @@ function Patient (props: PatientType & RouteComponentProps) {
   let [LoginRegModalVisable, changLoginRegModalVisable] = useState<boolean>(false);
 
   const logout = () => {
-    tool.delCookie('the_docters_token');
+    jsCookie.remove('the_docters_token', {path: '/'});
     props.onLogout();
   }
 
@@ -78,7 +80,9 @@ function Patient (props: PatientType & RouteComponentProps) {
     ></LogRegFormModal>
     <Layout className="layout">
       <Header className="header">
-        <img src="/img/logo.png" ></img>
+        <img src="/img/logo.png" onClick={(e: any) => {
+              props.history.push(`/Home`)
+        }}></img>
         <Menu
             theme="dark"
             mode="horizontal"
@@ -95,7 +99,7 @@ function Patient (props: PatientType & RouteComponentProps) {
             <Menu.Item key="Guide">就医指南</Menu.Item>
             <div className="myvalue">
             {
-              userInfo && userInfo.username ?
+              userInfo && userInfo.username && userInfo.type === 1 ?
                 <div>
                   <Avatar icon="user"/>
                   <Dropdown overlay={menu} className="div">

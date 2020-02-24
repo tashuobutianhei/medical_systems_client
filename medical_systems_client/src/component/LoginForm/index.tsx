@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import './index.scss'
 
 type Props = {
-  changeStatus: (aciton: string)=> void
+  changeStatus?: (aciton: string)=> void
   form: any
 }
 
@@ -48,7 +48,7 @@ function LoginForm(props: Props) {
         </div>
         <div>
           Or <a href="javascript:;" onClick={() => {
-            props.changeStatus('reg');
+            props.changeStatus && props.changeStatus('reg');
           }}>快去注册!</a>
         </div>
       </Form.Item>

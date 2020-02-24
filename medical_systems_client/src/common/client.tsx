@@ -1,7 +1,8 @@
 
 import axios from 'axios';
 import Tool from '../common/util';
-import {message} from 'antd';
+// import {message} from 'antd';
+import jsCookie from 'js-cookie';
 
 
 const client = axios.create({
@@ -14,9 +15,9 @@ const client = axios.create({
 
 client.interceptors.request.use(function (config) {
   config.withCredentials = true;
-  if (Tool.getCookie('the_docters_token')) {
+  if (jsCookie.get('the_docters_token')) {
     config.headers = {
-      "Authorization": `Bearer ${Tool.getCookie('the_docters_token')}`
+      "Authorization": `Bearer ${jsCookie.get('the_docters_token')}`
     }
   }
   return config;
