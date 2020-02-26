@@ -36,7 +36,7 @@ const homeList: Props[] = [{
   textColor: 'white',
   auth: true,
   type: 2,
-  path: 'Docter',
+  path: 'Doctor',
 }, {
   color: '#fff',
   imgUrl: 'manager',
