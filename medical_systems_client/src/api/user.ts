@@ -13,7 +13,7 @@ const userClient =  {
   },
 
   getUser() {
-    return get('/users/getUser')
+    return get('/users/getUser');
   }
 
 };

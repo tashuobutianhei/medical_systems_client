@@ -53,6 +53,7 @@ export function get (url: string, params?: object) {
     })
     .then(response => {
       resolve(response.data);
+      return response;
     })
     .catch(err => {
       reject(err)
@@ -61,10 +62,10 @@ export function get (url: string, params?: object) {
 
 }
 
-export function post (url: string, data: object) {
+export function post (url: string, data: object, method: any = 'post') {
   return new Promise((resolve,reject) => {
     client({
-      method: 'post',
+      method,
       url: url,
       headers: { "Content-Type": "application/x-www-from-urlencoded" },
       data: Tool.transformData(data)
