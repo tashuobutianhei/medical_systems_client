@@ -3,8 +3,8 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 import Home from '../view/Home/index';
-import Patient from '../view/Patient/index';
-import Doctor from '../view/Doctor/index';
+import Patient from '../view/PatientView/Patient/index';
+import Doctor from '../view/DoctoView/Doctor/index';
 
 import userClient from '../api/user';
 
@@ -46,15 +46,15 @@ function RootRoute(props: any) {
     <Switch>
       <Route exact path="/Home" component={Home}/>
       <Route path='/Patient'  component={Patient}/>
-      <Route path='/Doctor'  component={Doctor}/>
-      <Route path="/Doctor" render={() => (
-              props.user.type === 0
-               ? (
-                <Doctor></Doctor>
-              ) : (
-                  <Redirect to="/Home" />
-                )
-            )} />
+      <Route path="/Doctor" render={() => {
+        return (
+          props.user.type === 0
+           ? (
+            <Doctor></Doctor>
+          ) : (
+              <Redirect to="/Home" />
+            )
+          )} }/>
       <Redirect to='/Home'></Redirect>
     </Switch>
 	);

@@ -10,10 +10,10 @@ import DocterInfo from '../DocterInfo';
 import PatientHome from '../PatientHome';
 import Department from '../Department';
 import Order from '../Order';
-import Guide from '../Guide/';
-import {LoginRegModal as LogRegFormModal} from '../../component/loginAndReg'
-import { userLogin, userLogout } from '../../actiosn/user';
-import tool from '../../common/util';
+import Guide from '../Guide';
+import {LoginRegModal as LogRegFormModal} from '../../../component/loginAndReg'
+import { userLogin, userLogout } from '../../../actiosn/user';
+import tool from '../../../common/util';
 import jsCookie from 'js-cookie';
 
 
@@ -52,6 +52,7 @@ function Patient (props: PatientType & RouteComponentProps) {
   const logout = () => {
     jsCookie.remove('the_docters_token', {path: '/'});
     props.onLogout();
+    props.history.push(`/`)
   }
 
   const menu = (
@@ -122,8 +123,9 @@ function Patient (props: PatientType & RouteComponentProps) {
             </div>
           </Menu>
       </Header>
-      <Content className="content">
-        <Switch>
+      <Content className="patient-content">
+        <div className="patient-route">
+        <Switch> 
             <Route exact path="/Patient/Home" component={PatientHome}/>
             <Route path="/Patient/order" component={Order} />
             <Route path="/Patient/docterInfo" component={DocterInfo} />
@@ -131,8 +133,9 @@ function Patient (props: PatientType & RouteComponentProps) {
             <Route path="/Patient/guide" component={Guide}/>
             <Redirect to='/Patient/Home'></Redirect>
           </Switch>
+        </div>
       </Content>
-      <Footer className="footer">The Docters medical systems ©2020 Created by lizilong @ 软件工程 2016 02</Footer>
+      <Footer className="patient-footer">The Docters medical systems ©2020 Created by lizilong @ 软件工程 2016 02</Footer>
     </Layout>
     </>
   );

@@ -3,7 +3,7 @@ import { Layout, Menu, Avatar, Dropdown, Icon } from 'antd';
 import { Route, Switch, withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { userLogin, userLogout } from '../../actiosn/user';
+import { userLogin, userLogout } from '../../../actiosn/user';
 import jsCookie from 'js-cookie';
 
 import DoctorCase from '../DoctorCase/index';
@@ -42,6 +42,7 @@ function Doctor (props: userType & RouteComponentProps) {
   const logout = () => {
     jsCookie.remove('the_docters_token', {path: '/'});
     props.onLogout();
+    props.history.push(`/`)
   }
 
   const menu = (

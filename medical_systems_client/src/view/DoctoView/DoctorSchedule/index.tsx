@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Layout, Menu, Icon } from 'antd';
-import SceduleTable from '../../component/ScheduleTable/index';
+import SceduleTable from '../../../component/ScheduleTable/index';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter, Route, Switch } from 'react-router-dom';
-import doctorClient from '../../api/doctor';
+import doctorClient from '../../../api/doctor';
 import moment from 'moment';
 import 'antd/dist/antd.css'
 import './index.scss'

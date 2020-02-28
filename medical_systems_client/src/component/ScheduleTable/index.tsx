@@ -81,6 +81,7 @@ function ScheduleTable(props: {departmentId: string, user: any} & any) {
           ...theAddDoctor,
           key: wokrId + theAddDoctor.workerId,
           wokrId: wokrId,
+          sex: theAddDoctor.sex == 1 ? '男' : '女'
         }];
       })
     })
