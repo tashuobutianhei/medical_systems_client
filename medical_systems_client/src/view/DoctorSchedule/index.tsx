@@ -87,7 +87,7 @@ function DocterInfo (props: any & RouteComponentProps) {
           <Switch>
               <Route exact path="/Doctor/Schedule/:workDay" component={() => {
                 return(
-                  <SceduleTable departmentId={props.user.departmentId}></SceduleTable>
+                  <SceduleTable departmentId={props.user.departmentId} user={props.user}></SceduleTable>
                 )
               }} ></Route>
           </Switch>

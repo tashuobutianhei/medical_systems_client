@@ -12,12 +12,12 @@ import './index.scss'
 
 const { Option } = Select;
 
-function ScheduleTable(props: {departmentId: string} & any) {
+function ScheduleTable(props: {departmentId: string, user: any} & any) {
 
   const [data, changeData] = useState<any[]>([]); // 早 午 急诊 list
   const [EditdataList, changeEditdataList] =  useState<any[]>([]); // 子tablelist
   const [doctorList, changeDctorList] = useState<any[]>([]); // 医生状态list
-  const [seletDoctor, changeseletDoctor] = useState<any>(''); // 选择的医生
+  const [seletDoctor, changeseletDoctor] = useState<any>(''); // 选择的医生，表单使用
 
   let defaultExpandedRowKeys: any[] | undefined = [];
   let doctors:any[] = [];
@@ -25,19 +25,24 @@ function ScheduleTable(props: {departmentId: string} & any) {
   // 获得科室医生列表
   async function getDoctors(params: any) {
     const res:any =  await doctorClient.getDocters(params);
-    doctors = res.data;
+    if(res.code === 0) {
+      doctors = res.data;
     // 医生状态列表
     changeDctorList(res.data.map((item: any) => {
      return {
       ...item,
-      status: -1,
      }
     }));
+    }
   }
   
   // 获得排班计划
   async function fetchData() {
     const res:any =  await doctorClient.getScheduleList(props.match.params.workDay, props.departmentId);
+    if(res.code !== 0) {
+      return;
+    }
+    // 渲染三班的列表
     let array: any[] = [];
     res.data.forEach((item: any) => {
       array.push({
@@ -45,7 +50,7 @@ function ScheduleTable(props: {departmentId: string} & any) {
         wokrId: item.wokrId,
         shifts: CONST.WORK_SHIFTS[item.shifts],
         time: CONST.WORK_SHIFTS_TIME[item.shifts],
-        editer: item.editer ? item.editer : '暂无编辑',
+        editer: item.editer,
         add: '10.3.4.5654',
         doctors: item.docters,
         addStatus: false,
@@ -64,6 +69,7 @@ function ScheduleTable(props: {departmentId: string} & any) {
       if (!doctors) {
         return;
       }
+      // 进行对医生列表渲染
       doctors.split(',').forEach((workerId: any) => {
         const theAddDoctor = doctorList.find(item => {
           return item.workerId === workerId;
@@ -74,7 +80,7 @@ function ScheduleTable(props: {departmentId: string} & any) {
         midArray = [...midArray, {
           ...theAddDoctor,
           key: wokrId + theAddDoctor.workerId,
-          workerId: wokrId,
+          wokrId: wokrId,
         }];
       })
     })
@@ -96,7 +102,6 @@ function ScheduleTable(props: {departmentId: string} & any) {
   }, [data]);
 
   // 事件处理
-
   // 增加排班
   const addWork = async (record: any) => {
     const res: any = await doctorClient.addSchedule({
@@ -104,31 +109,35 @@ function ScheduleTable(props: {departmentId: string} & any) {
       workerId: seletDoctor,
     });
     if (res.code === 0) {
-      const theAddDoctor = doctorList.find(item => {
-        return item.workerId === seletDoctor;
-      })
-      let midArray = [...EditdataList, {
-        ...theAddDoctor,
-        key: theAddDoctor.workerId,
-        workerId: record.wokrId
-      }];
-      changeEditdataList(midArray);
+      // debugger;
+      // const theAddDoctor = doctorList.find(item => {
+      //   return item.workerId === seletDoctor;
+      // })
+      // let midArray = [...EditdataList, {
+      //   ...theAddDoctor,
+      //   key: theAddDoctor.workerId,
+      //   wokrId: record.wokrId
+      // }];
+      // changeEditdataList([midArray]);
+      fetchData()
     }
     changeseletDoctor('');
     changeAddStatus(record, false);
   }
 
   const deleteWork = async (record: any, wokrId: string) => {
-    console.log(record , wokrId);
     const res: any = await doctorClient.deleteSchedule({
       wokrId: wokrId,
-      workerId: record.workerId,
-    })
+      workerId: record[0].workerId,
+    });
+    if (res.code === 0) {
+      fetchData()
+    }
   }
 
   // 过滤子表展示数据
   const fliterData = (wokrId: string | number) => {
-    return EditdataList.filter(item => item.workerId === wokrId);
+    return EditdataList.filter(item => item.wokrId === wokrId);
   }
 
   // 修改状态
@@ -147,11 +156,36 @@ function ScheduleTable(props: {departmentId: string} & any) {
     changeData(mid);
   }
 
+  const checkDisabled = (wokrId: string, workerId: string ) => {
+    let theEditData = fliterData(wokrId);
+    let flag = false;
+    theEditData.forEach(item => {
+      if(item.workerId === workerId) {
+        flag = true;
+      }
+    })
+    return flag;
+  }
+
   const columns = [
     { title: '班次序列号', dataIndex: 'wokrId', key: 'wokrId' },
     { title: '班次', dataIndex: 'shifts', key: 'shifts' },
     { title: '时间', dataIndex: 'time', key: 'time' },
-    { title: '编辑人', dataIndex: 'editer', key: 'editer' },
+    { title: '编辑人',
+      dataIndex: 'editer',
+      key: 'editer',
+      // eslint-disable-next-line react/display-name
+      render: (record: any) => {
+        return (
+          (<span>{
+            record ? 
+            doctorList.find(item => item.workerId === record) ? 
+            doctorList.find(item => item.workerId === record).name : '': '暂无编辑'
+          }</span>)
+        )
+      }
+
+   },
     { title: '添加', 
       key: 'add', 
       width: 400,
@@ -165,14 +199,14 @@ function ScheduleTable(props: {departmentId: string} & any) {
               <Select style={{ width: 180, marginRight: '15px' }} onChange={(value) => {
                 changeseletDoctor(value);
               }}>
-               
                 {
                   doctorList.map(item =>
                     <Option 
                     key={item.workerId} 
                     value={item.workerId} 
-                    disabled={item.status !== -1}
-                  >{item.name}({item.workerId})</Option>
+                    disabled={checkDisabled(record.wokrId, item.workerId)}
+                  ><span style={{fontWeight: 'bolder'}}>{item.name}</span>({item.workerId})
+                  </Option>
                   )
                 }
               </Select>
@@ -184,14 +218,15 @@ function ScheduleTable(props: {departmentId: string} & any) {
                 changeseletDoctor('');
               }}>取消</Button>
             </div>
-            :<Button type="primary" onClick={()=> {
-              changeAddStatus(record, true);
-            }}>添加</Button> 
+            :<Button type="primary" 
+              disabled={props.user.position !== 'director'} 
+              onClick={()=> {
+                changeAddStatus(record, true);
+              }}>添加</Button> 
           }
          </div>
         )
       }
-       
     },
   ];
 

@@ -10,4 +10,10 @@ export default {
     1: '13:00 - 18: 00',
     2: '18:00 - 8: 00'
   },
+  DOCTOR_POSITION: {
+    'director': '主任',
+    'viceDirectors': '副主任',
+    'attending': '主治医生',
+    'residency': '住院医生'
+  }
 }
