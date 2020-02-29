@@ -21,7 +21,7 @@ function Order (props: any) {
 
   return (
     <div className="order-table">
-        <p className="order-table-title">挂号协议</p>
+        <p className="order-table-title">科室值班表</p>
         <div className="order-table-content">
 
         </div>
