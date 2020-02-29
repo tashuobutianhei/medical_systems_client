@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Checkbox} from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Checkbox } from 'antd';
 
 
 import 'antd/dist/antd.css'
@@ -10,17 +13,20 @@ type Props = {
   form: any
 }
 
+const formItemLayout = {
+  wrapperCol: { span: 24 },
+};
 
 function LoginForm(props: Props) {
   const { getFieldDecorator } = props.form;
   return (
-    <Form className="login-form">
+    <Form className="login-form" {...formItemLayout}>
       <Form.Item>
         {getFieldDecorator('username', {
           rules: [{ required: true, message: '至少得告诉我你叫啥呀？!' }],
         })(
           <Input
-            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
             placeholder="用户名"
           />,
         )}
@@ -30,7 +36,7 @@ function LoginForm(props: Props) {
           rules: [{ required: true, message: '请输入密码呀!不然咋登录' }],
         })(
           <Input
-            prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
             type="password"
             placeholder="密码"
           />,
@@ -53,7 +59,7 @@ function LoginForm(props: Props) {
         </div>
       </Form.Item>
     </Form>
-  )
+  );
 }
 
 

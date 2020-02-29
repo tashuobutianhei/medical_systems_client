@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Layout, Menu, Icon } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Layout, Menu } from 'antd';
 import SceduleTable from '../../../component/ScheduleTable/index';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter, Route, Switch } from 'react-router-dom';
@@ -63,7 +64,7 @@ function DocterInfo (props: any & RouteComponentProps) {
             key="sub1"
             title={
               <span>
-                <Icon type="user" />
+                <UserOutlined />
                 排班表
               </span>
             }

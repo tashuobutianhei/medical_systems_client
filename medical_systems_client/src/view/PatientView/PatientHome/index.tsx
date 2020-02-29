@@ -1,5 +1,6 @@
 import React from 'react'
-import { Icon, Carousel, Row, Col, Button } from 'antd';
+import { ForwardFilled, RightOutlined } from '@ant-design/icons';
+import { Carousel, Row, Col, Button } from 'antd';
 import { withRouter } from 'react-router-dom'
 import {CSSTransition} from 'react-transition-group';
 
@@ -85,7 +86,7 @@ function Home (props: any) {
           props.history.push(`/Patient/Department`)}
         }>
           科室导航 
-          <Icon type="forward" theme="filled" />
+          <ForwardFilled />
         </p>
         <Row gutter={16}>
           <Col span={8} className="PatientHome-body-department-img">
@@ -97,9 +98,9 @@ function Home (props: any) {
                 return (
                   <Button type="dashed" size="large" key={index} style={{width: '130px'}}>
                     {item.name}
-                    <Icon type="right" />
+                    <RightOutlined />
                   </Button>
-                  )
+                );
               })
             }
           </Col>
@@ -111,7 +112,7 @@ function Home (props: any) {
           props.history.push(`/Patient/Department`)}
         }>
           今日医师
-          <Icon type="forward" theme="filled" />
+          <ForwardFilled />
         </p>
         <Row gutter={16}>
           {

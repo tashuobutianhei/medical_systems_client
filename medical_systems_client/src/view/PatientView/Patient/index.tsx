@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Layout, Menu, Avatar, Dropdown, Icon } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Menu, Avatar, Dropdown } from 'antd';
 import { Route, Switch, withRouter, Redirect, RouteComponentProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -71,74 +72,72 @@ function Patient (props: PatientType & RouteComponentProps) {
   let key = props.location.pathname.split('/')[2];
 
 
-  return (
-    <>
-    <LogRegFormModal 
-      visible={LoginRegModalVisable} 
-      toggleModalVisable={toggleModalVisable}
-      loginSuccess={props.onLogin}
+  return <>
+  <LogRegFormModal 
+    visible={LoginRegModalVisable} 
+    toggleModalVisable={toggleModalVisable}
+    loginSuccess={props.onLogin}
 
-    ></LogRegFormModal>
-    <Layout className="layout">
-      <Header className="header">
-        <img src="/img/logo.png" onClick={(e: any) => {
-              props.history.push(`/Home`)
-        }}></img>
-        <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={[key]}
-            onClick={(e: any) => {
-              props.history.push(`/Patient/${e.key}`)
-            }}
-            style={{ lineHeight: '64px' }}
-          >
-            <Menu.Item key="Home">首页</Menu.Item>
-            <Menu.Item key="Order">医疗挂号</Menu.Item>
-            <Menu.Item key="Department">科室导航</Menu.Item>
-            <Menu.Item key="DocterInfo">医生介绍</Menu.Item>
-            <Menu.Item key="Guide">就医指南</Menu.Item>
-            <div className="myvalue">
-            {
-              userInfo && userInfo.username && userInfo.type === 1 ?
-                <div>
-                  <Avatar icon="user"/>
-                  <Dropdown overlay={menu} className="div">
-                    <a className="ant-dropdown-link" href="#">
-                      <span>{userInfo.username}</span>
-                      <Icon type="down" />
-                    </a>
-                  </Dropdown>
-                </div>
-                :
-                <div>
-                  <Avatar icon="user" />
-                  <span className="div" 
-                  onClick={()=>{
-                    changLoginRegModalVisable(!LoginRegModalVisable);
-                  }}
-                  style={{ color: 'white', cursor: 'pointer' }}>登录</span>
-                </div>
-            }
-            </div>
-          </Menu>
-      </Header>
-      <Content className="patient-content">
-        <div className="patient-route">
-        <Switch> 
-            <Route exact path="/Patient/Home" component={PatientHome}/>
-            <Route path="/Patient/order" component={Order} />
-            <Route path="/Patient/docterInfo" component={DocterInfo} />
-            <Route path="/Patient/department" component={Department}/>
-            <Route path="/Patient/guide" component={Guide}/>
-            <Redirect to='/Patient/Home'></Redirect>
-          </Switch>
-        </div>
-      </Content>
-      <Footer className="patient-footer">The Docters medical systems ©2020 Created by lizilong @ 软件工程 2016 02</Footer>
-    </Layout>
-    </>
-  );
+  ></LogRegFormModal>
+  <Layout className="layout">
+    <Header className="header">
+      <img src="/img/logo.png" onClick={(e: any) => {
+            props.history.push(`/Home`)
+      }}></img>
+      <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={[key]}
+          onClick={(e: any) => {
+            props.history.push(`/Patient/${e.key}`)
+          }}
+          style={{ lineHeight: '64px' }}
+        >
+          <Menu.Item key="Home">首页</Menu.Item>
+          <Menu.Item key="Order">医疗挂号</Menu.Item>
+          <Menu.Item key="Department">科室导航</Menu.Item>
+          <Menu.Item key="DocterInfo">医生介绍</Menu.Item>
+          <Menu.Item key="Guide">就医指南</Menu.Item>
+          <div className="myvalue">
+          {
+            userInfo && userInfo.username && userInfo.type === 1 ?
+              <div>
+                <Avatar icon={<UserOutlined />}/>
+                <Dropdown overlay={menu} className="div">
+                  <a className="ant-dropdown-link" href="#">
+                    <span>{userInfo.username}</span>
+                    <DownOutlined />
+                  </a>
+                </Dropdown>
+              </div>
+              :
+              <div>
+                <Avatar icon={<UserOutlined />} />
+                <span className="div" 
+                onClick={()=>{
+                  changLoginRegModalVisable(!LoginRegModalVisable);
+                }}
+                style={{ color: 'white', cursor: 'pointer' }}>登录</span>
+              </div>
+          }
+          </div>
+        </Menu>
+    </Header>
+    <Content className="patient-content">
+      <div className="patient-route">
+      <Switch> 
+          <Route exact path="/Patient/Home" component={PatientHome}/>
+          <Route path="/Patient/order" component={Order} />
+          <Route path="/Patient/docterInfo" component={DocterInfo} />
+          <Route path="/Patient/department" component={Department}/>
+          <Route path="/Patient/guide" component={Guide}/>
+          <Redirect to='/Patient/Home'></Redirect>
+        </Switch>
+      </div>
+    </Content>
+    <Footer className="patient-footer">The Docters medical systems ©2020 Created by lizilong @ 软件工程 2016 02</Footer>
+  </Layout>
+  </>;
 }
 
 export default withRouter(

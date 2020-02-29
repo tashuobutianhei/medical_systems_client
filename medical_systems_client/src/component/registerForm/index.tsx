@@ -1,5 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Divider, Radio, InputNumber} from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Input, Divider, Radio, InputNumber } from 'antd';
 
 
 import 'antd/dist/antd.css'
@@ -12,7 +15,7 @@ type Props = {
 
 const formItemLayout = {
   labelCol: { span: 3 },
-  // wrapperCol: { span: 14 },
+  wrapperCol: { span: 24 },
 };
 
 function RegForm(props:Props) {
@@ -24,7 +27,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请输入一个用户名作为登陆使用' }],
       })(
         <Input
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           placeholder="请输入一个用户名作为登陆使用，不可更改哦"
         />,
       )}
@@ -34,7 +37,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请输入密码,不然咋登录' }],
       })(
         <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           type="password"
           placeholder="密码"
         />,
@@ -45,7 +48,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请输入密码呀!不然咋登录' }],
       })(
         <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           type="password"
           placeholder="重复输入密码"
         />,
@@ -60,7 +63,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请填写姓名' }],
       })(
         <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           placeholder="请输入您的姓名"
         />,
       )}
@@ -70,7 +73,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请填写正确的身份证号' }],
       })(
         <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           placeholder="输入身份证"
         />,
       )}
@@ -80,7 +83,7 @@ function RegForm(props:Props) {
         rules: [{ required: true, message: '请输入正确手机号' }],
       })(
         <Input
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           placeholder="输入手机号"
         />,
       )}
@@ -110,7 +113,7 @@ function RegForm(props:Props) {
       </div>
     </Form.Item>
   </Form>
-  )
+  );
 }
 
 export const WrappedRegForm = Form.create<Props>({ name: 'user_reg' })(RegForm);
