@@ -3,6 +3,7 @@ import { Steps, Divider } from 'antd';
 
 import OrderRead from '../OrderGroup/OrderRead';
 import OrderDepartment from '../OrderGroup/OrderDepartment';
+import OrderTable from '../OrderGroup/OrderTable';
 
 import 'antd/dist/antd.css'
 import './index.scss'
@@ -59,7 +60,9 @@ function Order () {
           }
           {
             current == 1 ? <OrderDepartment nextStep={nextStep}></OrderDepartment> : null
-            
+          }
+          {
+            current == 2 ? <OrderTable nextStep={nextStep}></OrderTable> : null
           }
         </div>
     </div>
