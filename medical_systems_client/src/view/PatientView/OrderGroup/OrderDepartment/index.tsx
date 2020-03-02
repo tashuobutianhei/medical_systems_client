@@ -11,7 +11,7 @@ function Order (props: any) {
   const [checked, setChecked] = useState<number|string>(-1);
 
   const onclickButton = () => {
-    if (!checked) {
+    if (checked === -1) {
       message.error({
         content: '请选择科室',
         duration: 2

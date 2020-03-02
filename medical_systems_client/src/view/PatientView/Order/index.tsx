@@ -32,12 +32,23 @@ const StepList = [
   }
 ]
 
+type order = {
+  departmentId?: string | number,
+}
+
 function Order () {
   const [current, setScurrent] = useState<number>(0);
+  const [order, setOrder] = useState<order>({})
 
   const nextStep = (params: any) => {
     let cur = current;
     setScurrent(++cur);
+    if(typeof params === 'object' && Object.keys(params).length > 0) {
+      setOrder({
+        ...order,
+        ...params
+      })
+    }
   }
 
   return (
@@ -62,7 +73,7 @@ function Order () {
             current == 1 ? <OrderDepartment nextStep={nextStep}></OrderDepartment> : null
           }
           {
-            current == 2 ? <OrderTable nextStep={nextStep}></OrderTable> : null
+            current == 2 ? <OrderTable nextStep={nextStep} order={order}></OrderTable> : null
           }
         </div>
     </div>
